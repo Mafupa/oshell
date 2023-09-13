@@ -116,17 +116,16 @@ int main(int argc, char **argv)
 {
 	char *line;
 	char **args;
-	int status = 1, i = 0;
+	int status = 1;
 
 	do {
 		printf("oshell>");
+		fflush(stdout);
 		line = read_line();
 		args = split_line(line);
 		/*status = execute(args);*/
-		i++;
-		if (i > 4)
-			status = 0;
-
+		
+		status = 0;
 		print_string_array(args);
 		free(line);
 		free_string_array(args);
