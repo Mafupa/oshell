@@ -105,6 +105,53 @@ char *read_line()
 	return (line);
 }
 
+/**
+ * simple_strcmp - compares two strings
+ * @a: first string
+ * @b: second string
+ * Return: 1 if they are the same, 0 if different
+ */
+int simple_strcmp(char *a, char *b)
+{
+	int i = 0;
+
+	while (a[i] || b[i])
+	{
+		if (a[i] != b[i])
+			return (0);
+	}
+	return (1);
+}
+
+/**
+ * start_process - starts a process
+ * @args: arguments given
+ * Return: 1
+ */
+int start_process(char **args)
+{
+	pid_t pid, wpid;
+	int status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execvp(args[0], args) == -1)
+			perror("oshell");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid < 0)
+	{
+		perror("oshell");
+	}
+	else
+	{
+		do {
+			wpid = waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+	return (1);
+}
 
 /**
  * main - oshell
@@ -124,8 +171,9 @@ int main(int argc, char **argv)
 		line = read_line();
 		args = split_line(line);
 		/*status = execute(args);*/
+		start_process(args);
 		
-		status = 0;
+		status = strcmp(line, "exit\n");
 		print_string_array(args);
 		free(line);
 		free_string_array(args);
