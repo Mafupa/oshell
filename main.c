@@ -91,15 +91,16 @@ char *read_line()
 
 	if (getline(&line, &bufsize, stdin) == -1)
 	{
-	/*	if (foef(stdin))
+		if (feof(stdin))
 		{
+			printf("\n");
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			perror("no EOF");
 			exit(EXIT_FAILURE);
-		}*/
+		}
 		exit(EXIT_SUCCESS);
 	}
 	return (line);
