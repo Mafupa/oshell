@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 {
 	char *line;
 	char **args;
-	int status = 1;
+	int status = 1, failsafe = 5;
 
 	do {
 		printf("oshell>");
@@ -171,12 +171,15 @@ int main(int argc, char **argv)
 		line = read_line();
 		args = split_line(line);
 		/*status = execute(args);*/
-		start_process(args);
+		if (strcmp(args[0], "exit") == 0)
+			break;
+		status = start_process(args);
 		
-		status = strcmp(line, "exit\n");
-		print_string_array(args);
+		/*status = strcmp(line, "exit\n");
+		print_string_array(args);*/
 		free(line);
 		free_string_array(args);
-	} while (status);
+		failsafe--;
+	} while (status && failsafe > 0);
 	return (EXIT_SUCCESS);
 }
