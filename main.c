@@ -153,6 +153,13 @@ int start_process(char **args)
 	return (1);
 }
 
+int cmd_cd(char **args)
+{
+	if (chdir(args[1]) != 0)
+		perror("oshell");
+	return (1);
+}
+
 /**
  * main - oshell
  * @argc: argument count
@@ -163,7 +170,7 @@ int main(int argc, char **argv)
 {
 	char *line;
 	char **args;
-	int status = 1, failsafe = 5;
+	int status = 1;
 
 	do {
 		printf("oshell>");
@@ -173,13 +180,15 @@ int main(int argc, char **argv)
 		/*status = execute(args);*/
 		if (strcmp(args[0], "exit") == 0)
 			break;
-		status = start_process(args);
+		if (strcmp(args[0], "cd") == 0)
+			status = cmd_cd(args);
+		else
+			status = start_process(args);
 		
 		/*status = strcmp(line, "exit\n");
 		print_string_array(args);*/
 		free(line);
 		free_string_array(args);
-		failsafe--;
-	} while (status && failsafe > 0);
+	} while (status);
 	return (EXIT_SUCCESS);
 }
