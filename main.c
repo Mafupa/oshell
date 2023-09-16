@@ -87,7 +87,7 @@ void print_string_array(char **array)
 char *read_line()
 {
 	char *line = NULL;
-	ssize_t bufsize = 0;
+	size_t bufsize = 0;
 
 	if (getline(&line, &bufsize, stdin) == -1)
 	{
@@ -130,24 +130,24 @@ int simple_strcmp(char *a, char *b)
  */
 int start_process(char **args)
 {
-	pid_t pid, wpid;
+	pid_t pid;
 	int status;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		if (execvp(args[0], args) == -1)
-			perror("oshell");
+			perror("hsh");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
-		perror("oshell");
+		perror("hsh");
 	}
 	else
 	{
 		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
+			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 	return (1);
@@ -156,7 +156,7 @@ int start_process(char **args)
 int cmd_cd(char **args)
 {
 	if (chdir(args[1]) != 0)
-		perror("oshell");
+		perror("hsh");
 	return (1);
 }
 
@@ -166,14 +166,14 @@ int cmd_cd(char **args)
  * @argv: argument vector
  * Return: EXIT_SUCCESS
  */
-int main(int argc, char **argv)
+int main(int argc __attribute__ ((unused)), char **argv __attribute__ ((unused)))
 {
 	char *line;
 	char **args;
 	int status = 1;
 
 	do {
-		printf("oshell>");
+		printf("($)");
 		fflush(stdout);
 		line = read_line();
 		args = split_line(line);
