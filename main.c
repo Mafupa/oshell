@@ -161,11 +161,32 @@ int start_process(char **args)
 	return (1);
 }
 
+/**
+ * cmd_cd - change directory
+ * @args: argument vector
+ * Return: 1
+ */
 int cmd_cd(char **args)
 {
 	if (chdir(args[1]) != 0)
 		perror("hsh");
 	return (1);
+}
+
+
+/**
+ * cmd_exit - exit the shell
+ * @args: argument vector
+ */
+void cmd_exit(char **args)
+{
+	int status_code;
+
+	if (!args)
+		exit(EXIT_SUCCESS);
+	status_code = atoi(args[1]);
+	free_string_array(args);
+	exit(status_code);
 }
 
 /**
@@ -185,17 +206,19 @@ int main(int argc __attribute__ ((unused)), char **argv __attribute__ ((unused))
 		fflush(stdout);
 		line = read_line();
 		args = split_line(line);
+		free(line);
 		/*status = execute(args);*/
 		if (strcmp(args[0], "exit") == 0)
-			break;
+			cmd_exit(args);
 		if (strcmp(args[0], "cd") == 0)
 			status = cmd_cd(args);
+		else if (strcmp(args[0], "") == 0)
+			;
 		else
 			status = start_process(args);
 		
 		/*status = strcmp(line, "exit\n");
 		print_string_array(args);*/
-		free(line);
 		free_string_array(args);
 	} while (status);
 	return (EXIT_SUCCESS);
