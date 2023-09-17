@@ -135,12 +135,12 @@ int start_process(char **args)
 	int status;
 
 	/*
-	if (access(args[0], X_OK) == -1)
-	{
-		perror("hshd");
-		return (1);
-	}
-	*/
+	 * if (access(args[0], X_OK) == -1)
+	 * {
+	 * perror("hshd");
+	 * return (1);
+	 * }
+	 */
 	pid = fork();
 	if (pid == 0)
 	{
@@ -184,6 +184,8 @@ void cmd_exit(char **args)
 
 	if (!args)
 		exit(EXIT_SUCCESS);
+	if (!args[1])
+		exit(EXIT_SUCCESS);
 	status_code = atoi(args[1]);
 	free_string_array(args);
 	exit(status_code);
@@ -195,7 +197,8 @@ void cmd_exit(char **args)
  * @argv: argument vector
  * Return: EXIT_SUCCESS
  */
-int main(int argc __attribute__ ((unused)), char **argv __attribute__ ((unused)))
+int main(int argc __attribute__ ((unused)),
+		char **argv __attribute__ ((unused)))
 {
 	char *line;
 	char **args;
@@ -216,9 +219,8 @@ int main(int argc __attribute__ ((unused)), char **argv __attribute__ ((unused))
 			;
 		else
 			status = start_process(args);
-		
-		/*status = strcmp(line, "exit\n");
-		print_string_array(args);*/
+		/*status = strcmp(line, "exit\n");*/
+		/*print_string_array(args);*/
 		free_string_array(args);
 	} while (status);
 	return (EXIT_SUCCESS);
