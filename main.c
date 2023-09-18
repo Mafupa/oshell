@@ -129,7 +129,7 @@ int simple_strcmp(char *a, char *b)
  * @args: arguments given
  * Return: 1
  */
-int start_process(char **args)
+int start_process(char **args, char **envp)
 {
 	pid_t pid;
 	int status;
@@ -144,6 +144,7 @@ int start_process(char **args)
 	pid = fork();
 	if (pid == 0)
 	{
+		/*if (execve(args[0], args, envp) == -1)*/
 		if (execvp(args[0], args) == -1)
 			perror("hsh");
 		exit(EXIT_FAILURE);
@@ -198,7 +199,7 @@ void cmd_exit(char **args)
  * Return: EXIT_SUCCESS
  */
 int main(int argc __attribute__ ((unused)),
-		char **argv __attribute__ ((unused)))
+		char **argv __attribute__ ((unused)), char **envp)
 {
 	char *line;
 	char **args;
@@ -218,7 +219,7 @@ int main(int argc __attribute__ ((unused)),
 		else if (strcmp(args[0], "") == 0)
 			;
 		else
-			status = start_process(args);
+			status = start_process(args, envp);
 		/*status = strcmp(line, "exit\n");*/
 		/*print_string_array(args);*/
 		free_string_array(args);
