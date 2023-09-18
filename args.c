@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * split_line - splits a line in a list of arguments like in shell
  * @line: the line that we want to split
