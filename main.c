@@ -48,7 +48,6 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 		line = read_line();
 		args = split_line(line);
 		free(line);
-		/*status = execute(args);*/
 		if (strcmp(args[0], "exit") == 0)
 			cmd_exit(args);
 		if (strcmp(args[0], "cd") == 0)
@@ -57,8 +56,6 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 			;
 		else
 			status = start_process(args);
-		/*status = strcmp(line, "exit\n");*/
-		/*print_string_array(args);*/
 		free_string_array(args);
 	} while (status);
 	return (EXIT_SUCCESS);
