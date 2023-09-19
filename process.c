@@ -31,10 +31,10 @@ char *find_path(char *program_name)
 		attempt[c + d] = '\0';
 		i++;
 		j = i;
-		if (access(attempt, F_OK) == 0)
-			return (attempt);
-		else
+		if (access(attempt, F_OK) != 0)
 			free(attempt);
+		else
+			return (attempt);
 	}
 	perror("hsh");
 	return (NULL);

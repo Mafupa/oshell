@@ -89,7 +89,8 @@ char *read_line()
 	char *line = NULL;
 	size_t bufsize = 0;
 
-	if (getline(&line, &bufsize, stdin) == -1)
+	/*if (getline(&line, &bufsize, stdin) == -1)*/
+	if (custom_getline(&line, &bufsize, stdin) == -1)
 	{
 		if (feof(stdin))
 		{
@@ -98,7 +99,7 @@ char *read_line()
 		}
 		else
 		{
-			perror("no EOF");
+			perror("hsh");
 			exit(EXIT_FAILURE);
 		}
 		exit(EXIT_SUCCESS);
@@ -106,20 +107,52 @@ char *read_line()
 	return (line);
 }
 
-/**
- * simple_strcmp - compares two strings
- * @a: first string
- * @b: second string
- * Return: 1 if they are the same, 0 if different
- */
-int simple_strcmp(char *a, char *b)
-{
-	int i = 0;
 
-	while (a[i] || b[i])
+/**
+ * custom_getline - get one line from the stream
+ * @line: pointer to the line
+ * @n: the expected size of the line
+ * @stream: the stream
+ * Return: the number of chars read, -1 if error
+ */
+ssize_t custom_getline(char **line, size_t *n, FILE *stream)
+{
+	size_t i = 0;
+	int temp;
+
+	if (!line || !n || !stream)
 	{
-		if (a[i] != b[i])
-			return (0);
+		return (-1);
 	}
-	return (1);
+	if (!(*line) || *n < TOK_SIZE)
+	{
+		*n = TOK_SIZE;
+		*line = (char *)realloc(*line, *n);
+		if (!(*line))
+		{
+			return (-1);
+		}
+	}
+	while (1)
+	{
+		temp = fgetc(stream);
+		if (temp == EOF || temp == '\n')
+		{
+			(*line)[i] = '\0';
+			if (i == 0 && temp == EOF)
+				return (-1);
+			else
+				return (i);
+		}
+		(*line)[i] = (char)temp;
+		if (++i >= *n)
+		{
+			*n += TOK_SIZE;
+			*line = (char *)realloc(*line, *n);
+			if (!(*line))
+			{
+				return (-1);
+			}
+		}
+	}
 }

@@ -34,12 +34,12 @@ void cmd_exit(char **args)
  * cmd_env - prints the environement
  * Return: 1
  */
-int cmd_env()
+int cmd_env(void)
 {
 	char **env;
 
 	for (env = environ; *env != NULL; env++)
-		printf("%s\n",*env);
+		printf("%s\n", *env);
 	return (1);
 }
 
