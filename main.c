@@ -31,6 +31,20 @@ void cmd_exit(char **args)
 }
 
 /**
+ * cmd_env - prints the environement
+ * Return: 1
+ */
+int cmd_env()
+{
+	char **env;
+
+	for (env = environ; *env != NULL; env++)
+		printf("%s\n",*env);
+	return (1);
+}
+
+
+/**
  * main - oshell
  * @argc: argument count
  * @argv: argument vector
@@ -50,8 +64,10 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 		free(line);
 		if (strcmp(args[0], "exit") == 0)
 			cmd_exit(args);
-		if (strcmp(args[0], "cd") == 0)
+		else if (strcmp(args[0], "cd") == 0)
 			status = cmd_cd(args);
+		else if (strcmp(args[0], "env") == 0)
+			status = cmd_env();
 		else if (strcmp(args[0], "") == 0)
 			;
 		else

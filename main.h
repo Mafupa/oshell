@@ -19,6 +19,7 @@ void print_string_array(char **array);
 int simple_strcmp(char *a, char *b);
 int cmd_cd(char **args);
 void cmd_exit(char **args);
+int cmd_env();
 int start_process(char **args);
 char *find_path(char *program_name);
 char *custom_getenv(char *name);
