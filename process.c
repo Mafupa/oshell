@@ -36,6 +36,7 @@ char *find_path(char *program_name)
 		else
 			free(attempt);
 	}
+	perror("hsh");
 	return (NULL);
 }
 
@@ -74,13 +75,6 @@ int start_process(char **args)
 	int status;
 	char *path;
 
-	/*
-	 * if (access(args[0], X_OK) == -1)
-	 * {
-	 * perror("hshd");
-	 * return (1);
-	 * }
-	 */
 	path = find_path(args[0]);
 	if (!path)
 		return (1);
