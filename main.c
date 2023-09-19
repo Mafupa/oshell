@@ -36,8 +36,7 @@ void cmd_exit(char **args)
  * @argv: argument vector
  * Return: EXIT_SUCCESS
  */
-int main(int argc __attribute__ ((unused)),
-		char **argv __attribute__ ((unused)), char **envp)
+int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 {
 	char *line;
 	char **args;
@@ -57,7 +56,7 @@ int main(int argc __attribute__ ((unused)),
 		else if (strcmp(args[0], "") == 0)
 			;
 		else
-			status = start_process(args, envp);
+			status = start_process(args);
 		/*status = strcmp(line, "exit\n");*/
 		/*print_string_array(args);*/
 		free_string_array(args);

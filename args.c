@@ -23,7 +23,7 @@ char **split_line(char *line)
 			j = i + 1;
 		}
 		else if ((line[i] == '"' && q == 1) || (line[i] == ' ' && q == 0)\
-				|| line[i] == '\n' || line[i] == '\0')
+		|| line[i] == '\n' || line[i] == '\0')
 		{
 			args[args_i] = malloc(sizeof(char) * (i - j + 1));
 			if (!args)
