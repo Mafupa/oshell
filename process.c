@@ -7,7 +7,7 @@
  */
 char *find_path(char *program_name)
 {
-	int i = 0, j = 0, c, pn_len = 0;
+	int i = 0, j = 0, c, d, pn_len = 0;
 	char *PATH, *attempt;
 
 	PATH = custom_getenv("PATH");
@@ -15,24 +15,28 @@ char *find_path(char *program_name)
 		return (NULL);
 	while (program_name[pn_len])
 		pn_len++;
-	printf("bef");
-	fflush(stdout);
 	for (i = 0; PATH[i]; i++)
 	{
 		if (PATH[i] != ':')
 			continue;
-		attempt = malloc(sizeof(char) * (i - j + 1));
+		attempt = malloc(sizeof(char) * (i - j + pn_len + 2));
 		if (!attempt)
 			return (NULL);
 		for (c = 0; c < (i - j); c++)
-		{
 			attempt[c] = PATH[j + c];
-		}
-		attempt[c] = '\0';
+		attempt[c] = '/';
+		c++;
+		for (d = 0; d < pn_len; d++)
+			attempt[c + d] = program_name[d];
+		attempt[c + d] = '\0';
+		i++;
 		j = i;
-		printf("attempt: %s\n", attempt);
+		if (access(attempt, F_OK) == 0)
+			return (attempt);
+		else
+			free(attempt);
 	}
-	return (attempt);
+	return (NULL);
 }
 
 
@@ -79,12 +83,12 @@ int start_process(char **args)
 	 */
 	path = find_path(args[0]);
 	if (!path)
-		printf("why\n");
+		return (1);
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(args[0], args, environ) == -1)
+		if (execve(path, args, environ) == -1)
 			perror("hsh");
 		exit(EXIT_FAILURE);
 	}
