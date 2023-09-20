@@ -8,17 +8,16 @@
  */
 char *find_path(char *program_name)
 {
-	int i = 0, j = 0, c, d, pn_len = 0;
+	int i = 0, j = 0, c, d, pn_len = strlen(program_name), path_len;
 	char *PATH, *attempt;
 
 	PATH = _getenv("PATH");
 	if (!PATH)
 		return (NULL);
-	while (program_name[pn_len])
-		pn_len++;
-	for (i = 0; PATH[i]; i++)
+	path_len = strlen(PATH);
+	for (i = 0; i < path_len; i++)
 	{
-		if (PATH[i] != ':')
+		if (PATH[i] != ':' && PATH[i] != '\n')
 			continue;
 		attempt = malloc(sizeof(char) * (i - j + pn_len + 2));
 		if (!attempt)
@@ -75,7 +74,10 @@ int start_process(char **args)
 	int status;
 	char *path;
 
-	path = find_path(args[0]);
+	if (access(args[0], F_OK) == 0)
+		path = strdup(args[0]);
+	else
+		path = find_path(args[0]);
 	if (!path)
 		return (1);
 

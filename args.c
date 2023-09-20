@@ -89,7 +89,6 @@ char *read_line()
 	char *line = NULL;
 	size_t bufsize = 0;
 
-	/*if (getline(&line, &bufsize, stdin) == -1)*/
 	if (custom_getline(&line, &bufsize, stdin) == -1)
 	{
 		if (feof(stdin))
