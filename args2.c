@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * remove_useless_space - removes useless space before and after command
+ * @input: input filled with useless spaces
+ * Return: input with no useless spaces
+ */
 char *remove_useless_space(char *input)
 {
 	char *result;
