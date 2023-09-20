@@ -2,37 +2,37 @@
 
 /**
  * split_line - splits a line in a list of arguments like in shell
- * @line: the line that we want to split
+ * @a: the line that we want to split
  * Return: a list of all the arguments
  */
-char **split_line(char *line)
+char **split_line(char *a)
 {
-	int args_i = 0, q = 0, i = 0, j = 0, c = 0, len = 0;
+	int args_i = 0, q = 0, i = 0, j = 0, c = 0, len = strlen(a);
 	char **args;
 
 	args = malloc(sizeof(char *) * TOK_SIZE);
 	if (!args)
 		return (NULL);
-	while (line[len])
-		len++;
 	while (i <= len)
 	{
-		if (line[i] == '"' && q == 0)
+		if (a[i] == '"' && q == 0)
 		{
 			q = 1;
 			j = i + 1;
 		}
-		else if ((line[i] == '"' && q == 1) || (line[i] == ' ' && q == 0)\
-		|| line[i] == '\n' || line[i] == '\0')
+		else if ((a[i] == '"' && q) || (a[i] == ' ' && !q) || a[i] == '\n' || !a[i])
 		{
 			args[args_i] = malloc(sizeof(char) * (i - j + 1));
-			if (!args)
+			if (!args[args_i])
+			{
+				free_string_array(args);
 				return (NULL);
+			}
 			for (c = 0; c < (i - j); c++)
-				args[args_i][c] = line[j + c];
+				args[args_i][c] = a[j + c];
 			args[args_i][c] = '\0';
 			args_i++;
-			if (line[i] == ' ' && q == 0)
+			if (a[i] == ' ' && q == 0)
 			{
 				j = i + 1;
 			}
