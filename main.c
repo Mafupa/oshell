@@ -16,6 +16,7 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 1);
 		line = read_line(stdin);
+		line = remove_useless_space(line);
 		args = split_line(line);
 		free(line);
 		/* fun args*/

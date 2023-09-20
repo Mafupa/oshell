@@ -18,6 +18,8 @@ void free_string_array(char **array);
 void print_string_array(char **array);
 ssize_t custom_getline(char **line, size_t *n, FILE *stream);
 
+char *remove_useless_space(char *input);
+
 int cmd_cd(char **args);
 void cmd_exit(char **args);
 int cmd_env(void);

@@ -8,6 +8,7 @@
 char **split_line(char *a)
 {
 	int args_i = 0, q = 0, i = 0, j = 0, c = 0, len = strlen(a);
+	int args_len = TOK_SIZE;
 	char **args;
 
 	args = malloc(sizeof(char *) * TOK_SIZE);
@@ -32,6 +33,11 @@ char **split_line(char *a)
 				args[args_i][c] = a[j + c];
 			args[args_i][c] = '\0';
 			args_i++;
+			if (args_i >= args_len)
+			{
+				args_len += TOK_SIZE;
+				args = realloc(args, sizeof(char *) * args_len);
+			}
 			if (a[i] == ' ' && q == 0)
 			{
 				j = i + 1;
