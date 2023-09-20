@@ -10,7 +10,7 @@ char *find_path(char *program_name)
 	int i = 0, j = 0, c, d, pn_len = 0;
 	char *PATH, *attempt;
 
-	PATH = custom_getenv("PATH");
+	PATH = _getenv("PATH");
 	if (!PATH)
 		return (NULL);
 	while (program_name[pn_len])
@@ -47,7 +47,7 @@ char *find_path(char *program_name)
  * @name: the environement variable's title
  * Return: the value of the environement valiable
  */
-char *custom_getenv(char *name)
+char *_getenv(char *name)
 {
 	int name_len = 0;
 	char **env;

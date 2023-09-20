@@ -24,7 +24,7 @@ int cmd_env(void);
 
 int start_process(char **args);
 char *find_path(char *program_name);
-char *custom_getenv(char *name);
+char *_getenv(char *name);
 
 
 #endif
