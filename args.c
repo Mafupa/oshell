@@ -82,18 +82,18 @@ void print_string_array(char **array)
 
 /**
  * read_line - reads a line from the standart input and return it
+ * @stream: where we read the line from
  * Return: line from the standart input
  */
-char *read_line()
+char *read_line(FILE *stream)
 {
 	char *line = NULL;
 	size_t bufsize = 0;
 
-	if (custom_getline(&line, &bufsize, stdin) == -1)
+	if (custom_getline(&line, &bufsize, stream) == -1)
 	{
 		if (feof(stdin))
 		{
-			printf("\n");
 			exit(EXIT_SUCCESS);
 		}
 		else
