@@ -57,7 +57,7 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 	int status = 1;
 
 	do {
-		printf("($)");
+		printf("$ ");
 		fflush(stdout);
 		line = read_line();
 		args = split_line(line);
