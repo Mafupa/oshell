@@ -3,6 +3,7 @@
 /**
  * find_path - find a program's path in the PATH environement variable
  * @program_name: program's name
+ *
  * Return: the programs full path
  */
 char *find_path(char *program_name)
@@ -40,11 +41,10 @@ char *find_path(char *program_name)
 	return (NULL);
 }
 
-
-
-/*
- * custom_getenv - get a environement variable
+/**
+ * _getenv -  get a environement variable
  * @name: the environement variable's title
+ *
  * Return: the value of the environement valiable
  */
 char *_getenv(char *name)
