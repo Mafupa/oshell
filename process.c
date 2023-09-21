@@ -3,10 +3,11 @@
 /**
  * find_path - find a program's path in the PATH environement variable
  * @program_name: program's name
+ * @prgm_name: the name of the shell program
  *
  * Return: the programs full path
  */
-char *find_path(char *program_name)
+char *find_path(char *program_name, char *prgm_name)
 {
 	int i = 0, j = 0, c, d, pn_len = strlen(program_name), path_len;
 	char *PATH, *attempt;
@@ -36,7 +37,8 @@ char *find_path(char *program_name)
 		else
 			return (attempt);
 	}
-	perror("hsh");
+	/*perror(prgm_name);*/
+	fprintf(stderr, "%s: 1: %s: not found\n", prgm_name, program_name);
 	return (NULL);
 }
 
@@ -78,9 +80,9 @@ int start_process(char **args, char *prgm_name)
 	if (access(args[0], F_OK) == 0)
 		path = strdup(args[0]);
 	else
-		path = find_path(args[0]);
+		path = find_path(args[0], prgm_name);
 	if (!path)
-		return (1);
+		return (127);
 
 	pid = fork();
 	if (pid == 0)
