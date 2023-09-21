@@ -90,6 +90,7 @@ char *read_line(FILE *stream)
 
 	if (custom_getline(&line, &bufsize, stream) == -1)
 	{
+		free(line);
 		if (feof(stdin))
 		{
 			exit(EXIT_SUCCESS);

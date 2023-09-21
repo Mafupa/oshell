@@ -66,9 +66,10 @@ char *_getenv(char *name)
 /**
  * start_process - starts a process
  * @args: arguments given
+ * @prgm_name: program's name
  * Return: 1
  */
-int start_process(char **args)
+int start_process(char **args, char *prgm_name)
 {
 	pid_t pid;
 	int status;
@@ -85,12 +86,12 @@ int start_process(char **args)
 	if (pid == 0)
 	{
 		if (execve(path, args, environ) == -1)
-			perror("hsh");
+			perror(prgm_name);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
-		perror("hsh");
+		perror(prgm_name);
 	}
 	else
 	{

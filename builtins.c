@@ -3,12 +3,13 @@
 /**
  * cmd_cd - change directory
  * @args: argument vector
+ * @prgm_name: program's name
  * Return: 1
  */
-int cmd_cd(char **args)
+int cmd_cd(char **args, char *prgm_name)
 {
 	if (chdir(args[1]) != 0)
-		perror("hsh");
+		perror(prgm_name);
 	return (1);
 }
 

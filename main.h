@@ -20,11 +20,11 @@ ssize_t custom_getline(char **line, size_t *n, FILE *stream);
 
 char *remove_useless_space(char *input);
 
-int cmd_cd(char **args);
+int cmd_cd(char **args, char *prgm_name);
 void cmd_exit(char **args);
 int cmd_env(void);
 
-int start_process(char **args);
+int start_process(char **args, char *prgm_name);
 char *find_path(char *program_name);
 char *_getenv(char *name);
 
