@@ -19,3 +19,20 @@ char *remove_useless_space(char *input)
 	result[end - start + 1] = '\0';
 	return (result);
 }
+
+/**
+ * is_digits - check if all the characters of a string are digits
+ * @str: the string
+ * Return: 1 if they are all digits, 0 otherwise
+ */
+int is_digits(char *str)
+{
+	int i;
+
+	for (i = 0; str[i]; i++)
+	{
+		if (str[i] < '0' || str[i] > '0')
+			return (0);
+	}
+	return (1);
+}

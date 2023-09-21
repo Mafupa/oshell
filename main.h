@@ -19,9 +19,10 @@ void print_string_array(char **array);
 ssize_t custom_getline(char **line, size_t *n, FILE *stream);
 
 char *remove_useless_space(char *input);
+int is_digits(char *str);
 
 int cmd_cd(char **args, char *prgm_name);
-void cmd_exit(char **args);
+void cmd_exit(char **args, char *prgm);
 int cmd_env(void);
 
 int start_process(char **args, char *prgm_name);

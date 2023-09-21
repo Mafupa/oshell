@@ -17,18 +17,30 @@ int cmd_cd(char **args, char *prgm_name)
 /**
  * cmd_exit - exit the shell
  * @args: argument vector
+ * @prgm: program's name
  */
-void cmd_exit(char **args)
+void cmd_exit(char **args, char *prgm)
 {
-	int status_code;
+	int sc;
 
 	if (!args)
 		exit(EXIT_SUCCESS);
 	if (!args[1])
 		exit(EXIT_SUCCESS);
-	status_code = atoi(args[1]);
-	free_string_array(args);
-	exit(status_code);
+	if (is_digits(args[1]) == 0)
+	{
+		fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", prgm, args[1]);
+		free_string_array(args);
+		exit(2);
+	}
+	sc = atoi(args[1]);
+	if (sc < 0)
+	{
+		fprintf(stderr, "%s: 1: exit: Illegal number: %d\n", prgm, sc);
+		free_string_array(args);
+		exit(2);
+	}
+	exit(sc);
 }
 
 /**

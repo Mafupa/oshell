@@ -22,7 +22,7 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 		free(clean_line);
 		/* fun args*/
 		if (strcmp(args[0], "exit") == 0)
-			cmd_exit(args);
+			cmd_exit(args, argv[0]);
 		else if (strcmp(args[0], "cd") == 0)
 			status = cmd_cd(args, argv[0]);
 		else if (strcmp(args[0], "env") == 0)
